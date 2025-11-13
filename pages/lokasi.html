@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lokasi PDAM Terdekat - PERUMDA TIRTA SUGI LAENDE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <link rel="stylesheet" href="/css/lokasi.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="/img/LOGO PERUMDA.jpg" alt="Logo PERUMDA" />
+      <div class="brand">
+        <h1>PERUMDA TIRTA SUGI LAENDE</h1>
+        <div class="sub">KABUPATEN MUNA</div>
+      </div>
+    </div>
+
+    <div class="right-menu">
+      <nav class="main-nav">
+        <a href="/index.html">HOME</a>
+        <a href="/pages/tentang.html">TENTANG</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">LAYANAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/tagihan.html">Cek Tagihan</a>
+            <a class="dropdown-item" href="/pages/lokasi.html">Lokasi PDAM</a>
+            <a class="dropdown-item" href="/pages/meteran.html">Status Meteran</a>
+            <a class="dropdown-item" href="/pages/profil.html#riwayat">Riwayat Transaksi</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">BANTUAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/cs.html">Customer Service</a>
+            <a class="dropdown-item" href="/pages/faq.html">FAQ</a>
+            <a class="dropdown-item" href="/pages/kontak.html">Kontak Kami</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="/pages/register.html" class="signup-button">Sign Up</a>
+    </div>
+  </header>
+
+  <main class="page container">
+    <div class="page-header">
+      <h1 class="fw-bold">LOKASI PDAM TERDEKAT</h1>
+      <p class="muted">Cari lokasi terdekat Anda.</p>
+    </div>
+
+    <div class="search-bar">
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input id="searchInput" type="text" class="form-control" placeholder="Cari Cabang PDAM">
+      </div>
+      <button id="btnMyLocation" class="btn btn-outline-primary">
+        <i class="fa-solid fa-location-crosshairs me-1"></i> Gunakan lokasi saya
+      </button>
+      <button id="btnClearOrigin" class="btn btn-outline-secondary">
+        <i class="fa-solid fa-xmark me-1"></i> Hapus titik asal
+      </button>
+    </div>
+
+    <div class="map-layout">
+      <div>
+        <div id="map" class="panel"></div>
+        <div class="tip">Klik peta untuk memilih lokasi kustom sebagai titik asal.</div>
+      </div>
+
+      <aside class="panel">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="m-0">Cabang Terdekat</h5>
+          <span id="originLabel" class="muted">Titik asal: belum ditentukan</span>
+        </div>
+        <div id="listContainer"></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/pages/cs.html">Pusat Bantuan</a>
+      <a href="/pages/kontak.html">Hubungi Kami</a>
+      <a href="/pages/faq.html">Kebijakan Privasi</a>
+    </div>
+    <div class="copy">
+      © 2025 PDAM Tirta SUGI LAENDE. Semua hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <script src="/js/script.js"></script>
+  <script src="/js/lokasi.js"></script>
+</body>
+</html>
