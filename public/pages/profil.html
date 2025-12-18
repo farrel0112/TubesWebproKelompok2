@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profil Saya - PERUMDA TIRTA SUGI LAENDE</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="/css/profil.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="/img/LOGO PERUMDA.jpg" alt="Logo PERUMDA" />
+      <div class="brand">
+        <h1>PERUMDA TIRTA SUGI LAENDE</h1>
+        <div class="sub">KABUPATEN MUNA</div>
+      </div>
+    </div>
+
+    <div class="right-menu">
+      <nav class="main-nav">
+        <a href="/index.html">HOME</a>
+        <a href="/pages/tentang.html">TENTANG</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">LAYANAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/tagihan.html">Cek Tagihan</a>
+            <a class="dropdown-item" href="/pages/lokasi.html">Lokasi PDAM</a>
+            <a class="dropdown-item" href="/pages/meteran.html">Status Meteran</a>
+            <a class="dropdown-item" href="/pages/profil.html#riwayat">Riwayat Transaksi</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">BANTUAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/cs.html">Customer Service</a>
+            <a class="dropdown-item" href="/pages/faq.html">FAQ</a>
+            <a class="dropdown-item" href="/pages/kontak.html">Kontak Kami</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="/pages/register.html" class="signup-button" id="userNavAction">Sign Up</a>
+    </div>
+  </header>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <i class="fa-solid fa-bars" id="sidebarToggleIcon"></i>
+  </button>
+
+  <div class="main-wrapper" id="mainWrapper">
+    <aside class="sidebar-fixed" id="sidebarFixed" aria-label="Sidebar profile">
+      <div class="profile-head">
+        <div class="avatar" id="avatarBox" title="Klik Ganti Foto">
+          <img id="avatarImg" alt="Foto Profil" />
+          <i class="fa-solid fa-user" id="avatarIcon"></i>
+        </div>
+
+        <div class="profile-name" id="sidebarProfileName"></div>
+
+        <div class="avatar-actions">
+          <button class="btn-ghost btn-sm" id="btnAvatarChange">
+            <i class="fa-regular fa-image"></i>
+            Ganti Foto
+          </button>
+          <button class="btn-ghost btn-sm" id="btnAvatarRemove">
+            <i class="fa-regular fa-trash-can"></i>
+            Hapus
+          </button>
+          <input type="file" id="avatarInput" accept="image/*" hidden />
+        </div>
+      </div>
+
+      <ul class="nav-list" id="profileMenu" role="tablist" aria-orientation="vertical">
+        <li class="active" data-target="infoPribadi">
+          <i class="fa-solid fa-user"></i>
+          <span class="nav-text">Informasi Pribadi</span>
+        </li>
+        <li data-target="alamat">
+          <i class="fa-solid fa-location-dot"></i>
+          <span class="nav-text">Alamat Terdaftar</span>
+        </li>
+        <li data-target="riwayat">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span class="nav-text">Riwayat Pembayaran</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-help">Pusat Bantuan • Hubungi Kami</div>
+    </aside>
+
+    <div class="content-area">
+      <div class="content-inner">
+        <div class="page-title">Profil Saya</div>
+
+        <!-- INFO PRIBADI -->
+        <section id="infoPribadi" class="card-panel" role="region" aria-labelledby="infoPribadiTitle">
+          <h5 id="infoPribadiTitle">Informasi Pribadi</h5>
+          <div class="card-sub">Perbarui informasi kontak Anda di sini.</div>
+
+          <form id="formPribadi">
+            <div class="mb-2">
+              <div class="label-muted">Nama Lengkap</div>
+              <input type="text" class="form-control" id="namaLengkap" name="name" />
+            </div>
+
+            <div class="row gx-3 mb-2">
+              <div class="col-md-6">
+                <div class="label-muted">Nomor Telepon</div>
+                <input type="text" class="form-control" id="noTelepon" name="phone" />
+              </div>
+              <div class="col-md-6">
+                <div class="label-muted">Alamat Email</div>
+                <input type="email" class="form-control" id="email" name="email" />
+              </div>
+            </div>
+
+            <div class="row gx-3 mb-2">
+              <div class="col-md-6">
+                <div class="label-muted">Nomor Pelanggan</div>
+                <input type="text" class="form-control" id="customer_no" name="customer_no"
+                       placeholder="Contoh: D012345" disabled />
+              </div>
+              <div class="col-md-6">
+                <div class="label-muted">NIK</div>
+                <input type="text" class="form-control" id="nik" name="nik" placeholder="16 digit NIK" />
+              </div>
+            </div>
+
+            <div id="profileError" class="mt-2 small" style="display:none;"></div>
+
+            <div class="form-actions mt-3">
+              <button type="button" class="btn-ghost" id="btnCancelInfo">Batal</button>
+              <button type="submit" class="btn-primary">Simpan Perubahan</button>
+            </div>
+          </form>
+        </section>
+
+        <section id="alamat" class="card-panel" role="region" aria-labelledby="alamatTitle" style="display:none;">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 id="alamatTitle">Alamat Terdaftar</h5>
+          </div>
+          <div class="card-sub">Alamat ini digunakan untuk layanan dan tagihan.</div>
+
+          <form id="formAlamat" class="mt-2">
+            <div class="mb-2">
+              <div class="label-muted">Alamat Lengkap</div>
+              <input type="text" class="form-control" id="alamatLengkap" />
+            </div>
+            <div class="mb-2">
+              <div class="label-muted">Provinsi</div>
+              <input type="text" class="form-control" id="provinsi" />
+            </div>
+            <div class="mb-2">
+              <div class="label-muted">Kota/Kabupaten</div>
+              <input type="text" class="form-control" id="kota" />
+            </div>
+            <div class="mb-2">
+              <div class="label-muted">Kode Pos</div>
+              <input type="text" class="form-control" id="kodePos" />
+            </div>
+
+            <div id="alamatStatus" class="small mt-2" style="display:none;"></div>
+
+            <div class="form-actions mt-3">
+              <button type="button" class="btn-ghost" id="btnCancelAlamat">Batal</button>
+              <button type="submit" class="btn-primary">Simpan Alamat</button>
+            </div>
+          </form>
+        </section>
+
+        <section id="riwayat" class="card-panel" role="region" aria-labelledby="riwayatTitle" style="display:none;">
+          <h5 id="riwayatTitle">Riwayat Pembayaran</h5>
+          <div class="card-sub">Ringkasan pembayaran dan invoice Anda.</div>
+
+          <div class="payments-summary">
+            <div class="summary-box">
+              <div class="label-muted">Total Tagihan</div>
+              <div class="num" id="summaryTotal">Rp 0</div>
+              <div class="muted-note" id="summaryPeriodNote">Periode berjalan</div>
+            </div>
+            <div class="summary-box">
+              <div class="label-muted">Terbayar</div>
+              <div class="num" id="summaryPaid">0</div>
+              <div class="muted-note">Transaksi sukses</div>
+            </div>
+            <div class="summary-box">
+              <div class="label-muted">Tertunggak</div>
+              <div class="num" id="summaryUnpaid">0</div>
+              <div class="muted-note">Butuh tindakan</div>
+            </div>
+          </div>
+
+          <!-- LIST RIWAYAT: akan di-render oleh JS -->
+          <div class="payment-list card-sub" id="paymentList">
+            <div class="muted-note">Memuat riwayat...</div>
+          </div>
+        </section>
+
+        <div class="text-center mt-4">
+          <button onclick="handleLogout()" class="btn btn-danger">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/pages/cs.html">Pusat Bantuan</a>
+      <a href="/pages/kontak.html">Hubungi Kami</a>
+      <a href="/pages/faq.html">Kebijakan Privasi</a>
+    </div>
+    <div class="copy">
+      © 2025 PDAM Tirta SUGI LAENDE. Semua hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar-auth.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureAuthenticated();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/profil.js"></script>
+</body>
+</html>

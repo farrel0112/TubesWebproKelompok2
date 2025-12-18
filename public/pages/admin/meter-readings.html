@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Input Meter | PDAM</title>
+
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <span class="drop"></span>
+        <div>
+          <div class="brand-title">PDAM</div>
+          <div class="brand-sub">Admin Panel</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-item" href="/pages/admin/dashboard.html">📊 Dashboard</a>
+      <a class="nav-item" href="/pages/admin/customers.html">👥 Pelanggan</a>
+      <a class="nav-item active" href="/pages/admin/meter-readings.html">📟 Input Meter</a>
+      <a class="nav-item" href="/pages/admin/bills.html">🧾 Tagihan</a>
+      <a class="nav-item" href="/pages/admin/complaints.html">🛠️ Pengaduan</a>
+      <div class="nav-divider"></div>
+      <button id="btnLogout" class="nav-item nav-btn">🚪 Logout</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <div>
+          <div class="hero-kicker"><span class="kicker-dot"></span> Operasional</div>
+          <h1 class="hero-title">Input Meter</h1>
+          <div class="hero-subtitle">Catat pembacaan meter air pelanggan per periode + kelola master meter</div>
+        </div>
+      </div>
+      <div class="hero-wave"></div>
+    </header>
+
+    <div id="alert" class="alert hidden"></div>
+
+    <!-- PANEL: INPUT & LIST METER READINGS -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Pembacaan Meter</h2>
+          <div class="panel-subtitle">Tambah data pembacaan meter untuk generate tagihan</div>
+        </div>
+        <button class="btn-primary" id="btnAddReading">+ Input Pembacaan</button>
+      </div>
+
+      <div class="filters">
+        <div class="field">
+          <label>Filter Periode (YYYYMM)</label>
+          <input id="filterPeriod" placeholder="contoh: 202512" />
+        </div>
+
+        <div class="field">
+          <label>Cari Meter ID</label>
+          <input id="filterMeter" placeholder="contoh: 12" />
+        </div>
+
+        <button class="btn-secondary" id="btnApply">Terapkan</button>
+        <button class="btn-secondary" id="btnReset">Reset</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Meter ID</th>
+            <th>Periode</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Kubikasi</th>
+            <th>Tanggal Baca</th>
+            <th>Aksi</th>
+          </tr>
+          </thead>
+          <tbody id="readingTable">
+          <tr><td colspan="8" class="muted">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PANEL: MANAJEMEN MASTER METER (INCLUDE DI HALAMAN INI) -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Manajemen Meter</h2>
+          <div class="panel-subtitle">Daftarkan meter air untuk pelanggan (agar bisa dipilih saat input pembacaan)</div>
+        </div>
+        <button class="btn-primary" id="btnAddMeter">+ Tambah Meter</button>
+      </div>
+
+      <div class="filters">
+        <div class="field">
+          <label>Cari Meter ID / Nomor Meter</label>
+          <input id="filterMeterMaster" placeholder="contoh: 5 atau PDAM-0005" />
+        </div>
+
+        <div class="field">
+          <label>Cari Nama Pelanggan</label>
+          <input id="filterCustomerName" placeholder="contoh: Muhammad" />
+        </div>
+
+        <button class="btn-secondary" id="btnApplyMeter">Terapkan</button>
+        <button class="btn-secondary" id="btnResetMeter">Reset</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+                <th>ID</th>
+                <th>Serial No</th>
+                <th>Pelanggan</th>
+                <th>Alamat</th>
+                <th>Tanggal Pasang</th>
+                <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="meterTable">
+          <tr><td colspan="6" class="muted">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MODAL: ADD/EDIT READING -->
+    <div class="modal hidden" id="modalReading">
+      <div class="modal-card modal-wide">
+        <div class="modal-head">
+          <h3 id="modalReadingTitle">Input Pembacaan</h3>
+          <button class="icon-btn" id="btnCloseReading" type="button">✕</button>
+        </div>
+
+        <form id="readingForm">
+          <input type="hidden" id="readingId" />
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Pilih Meter</label>
+              <select id="meterId" required></select>
+              <div class="hint" id="meterHint">Pilih meter untuk auto start_read</div>
+            </div>
+
+            <div class="field">
+              <label>Periode (YYYYMM)</label>
+              <input id="period" placeholder="contoh: 202512" required />
+              <div class="hint">Gunakan format 6 digit</div>
+            </div>
+
+            <div class="field">
+              <label>Tanggal Baca</label>
+              <input type="date" id="readAt" required />
+              <div class="hint">Tanggal petugas mencatat</div>
+            </div>
+
+            <div class="field">
+              <label>Start Read (otomatis)</label>
+              <input id="startRead" type="number" min="0" readonly />
+              <div class="hint">Diambil dari end_read terakhir</div>
+            </div>
+
+            <div class="field">
+              <label>End Read</label>
+              <input id="endRead" type="number" min="0" required />
+              <div class="hint">Harus >= start_read</div>
+            </div>
+
+            <div class="field">
+              <label>Kubikasi (m³)</label>
+              <input id="kubikasi" type="number" readonly />
+              <div class="hint">end_read - start_read</div>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btnCancelReading">Batal</button>
+            <button type="submit" class="btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL: ADD/EDIT METER -->
+    <div class="modal hidden" id="modalMeter">
+      <div class="modal-card modal-wide">
+        <div class="modal-head">
+          <h3 id="modalMeterTitle">Tambah Meter</h3>
+          <button class="icon-btn" id="btnCloseMeter" type="button">✕</button>
+        </div>
+
+        <form id="meterForm">
+            <input type="hidden" id="meterEditId" />
+
+            <div class="form-grid">
+                <div class="field">
+                    <label>Pilih Pelanggan</label>
+                    <select id="meterCustomerId" required></select>
+                    <div class="hint">Pilih pelanggan yang memiliki meter ini</div>
+                </div>
+
+                <div class="field">
+                    <label>Serial Number (serial_no)</label>
+                    <input id="meterSerialNo" placeholder="contoh: SN-00012345" required />
+                    <div class="hint">Nomor seri meter (unik)</div>
+                </div>
+
+                <div class="field">
+                    <label>Tanggal Pasang (install_date)</label>
+                    <input id="meterInstallDate" type="date" required />
+                    <div class="hint">Tanggal instalasi meter</div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="btnCancelMeter">Batal</button>
+                <button type="submit" class="btn-primary">Simpan</button>
+            </div>
+            </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="muted">Input Meter & Manajemen Meter • PDAM Kabupaten Muna</div>
+    </footer>
+  </main>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/admin-guard.js"></script>
+<script src="/js/admin-meter-readings.js"></script>
+</body>
+</html>

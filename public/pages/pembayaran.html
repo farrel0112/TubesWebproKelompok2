@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pembayaran - PERUMDA TIRTA SUGI LAENDE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="/css/pembayaran.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="/img/LOGO PERUMDA.jpg" alt="Logo PERUMDA" />
+      <div class="brand">
+        <h1>PERUMDA TIRTA SUGI LAENDE</h1>
+        <div class="sub">KABUPATEN MUNA</div>
+      </div>
+    </div>
+
+    <div class="right-menu">
+      <nav class="main-nav">
+        <a href="/index.html">HOME</a>
+        <a href="/pages/tentang.html">TENTANG</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">LAYANAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/tagihan.html">Cek Tagihan</a>
+            <a class="dropdown-item" href="/pages/lokasi.html">Lokasi PDAM</a>
+            <a class="dropdown-item" href="/pages/meteran.html">Status Meteran</a>
+            <a class="dropdown-item" href="/pages/profil.html#riwayat">Riwayat Transaksi</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">BANTUAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/cs.html">Customer Service</a>
+            <a class="dropdown-item" href="/pages/faq.html">FAQ</a>
+            <a class="dropdown-item" href="/pages/kontak.html">Kontak Kami</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="/pages/register.html" class="signup-button" id="userNavAction">Sign Up</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <header class="page-header">
+      <h1>KONFIRMASI PEMBAYARAN</h1>
+      <p class="muted-small">Periksa kembali data tagihan Anda sebelum melanjutkan ke pembayaran.</p>
+
+      <div class="steps" aria-hidden="true">
+        <div class="step">
+          <span class="step-number step-current">①</span>
+          <span class="step-text step-text-current">Cek Tagihan</span>
+        </div>
+        <div class="step">
+          <span class="step-number">②</span>
+          <span class="step-text">Pembayaran</span>
+        </div>
+        <div class="step">
+          <span class="step-number">③</span>
+          <span class="step-text">Selesai</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="main-grid">
+      <div class="left-col">
+        <article class="card-panel summary-card" id="summaryCard">
+          <h5>Ringkasan Tagihan</h5>
+          <p class="muted-small">Periksa data sebelum lanjut membayar.</p>
+
+          <div class="summary-grid">
+            <div class="label">Nomor Pelanggan</div>
+            <div class="value" id="s_nomor">-</div>
+
+            <div class="label">Nama</div>
+            <div class="value" id="s_nama">-</div>
+
+            <div class="label">Periode</div>
+            <div class="value" id="s_periode">-</div>
+
+            <div class="label">Total Tagihan</div>
+            <div class="value" id="s_total">-</div>
+
+            <div class="label">Status</div>
+            <div class="value">
+              <span id="s_status" class="badge bg-danger">-</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <aside class="right-col card-panel illustration">
+        <img src="/img/orang_biru.png" alt="Ilustrasi" />
+      </aside>
+
+      <div class="methods-area">
+        <div class="methods-title">Pilih Metode Pembayaran</div>
+
+          <div class="methods-row">
+          <!-- ONLINE (MIDTRANS) -->
+            <a class="method-card" href="#" data-method="midtrans">
+              <div class="icon">
+                <img src="/img/logo_tagihan.png" alt="midtrans" />
+              </div>
+              <div class="method-desc">
+                <div class="method-name">Pembayaran Online (Midtrans Sandbox)</div>
+                <div class="muted-small">
+                  VA / QRIS / e-wallet dipilih di popup pembayaran
+                </div>
+              </div>
+              <div class="method-cta">
+                <span class="btn btn-outline-secondary">Pilih</span>
+              </div>
+            </a>
+
+            <!-- OFFLINE (LOKET) -->
+            <a class="method-card" href="#" data-method="loket">
+              <div class="icon">
+                <img src="/img/logo_tagihan.png" alt="loket" />
+              </div>
+              <div class="method-desc">
+                <div class="method-name">Bayar Langsung (Loket PDAM)</div>
+                <div class="muted-small">
+                  Dapatkan kode referensi, lalu bayar di loket
+                </div>
+              </div>
+              <div class="method-cta">
+                <span class="btn btn-outline-secondary">Pilih</span>
+              </div>
+            </a>
+          </div>
+
+
+        <div class="actions">
+          <a href="/pages/tagihan.html" class="muted-small back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            ← Kembali
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/pages/cs.html">Pusat Bantuan</a>
+      <a href="/pages/kontak.html">Hubungi Kami</a>
+      <a href="/pages/faq.html">Kebijakan Privasi</a>
+    </div>
+    <div class="copy">
+      © 2025 PDAM Tirta SUGI LAENDE. Semua hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar-auth.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureAuthenticated();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/pembayaran.js"></script>
+</body>
+</html>

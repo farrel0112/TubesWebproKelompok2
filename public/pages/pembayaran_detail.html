@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Metode Pembayaran - PERUMDA TIRTA SUGI LAENDE</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="/css/pembayaran_detail.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="/img/LOGO PERUMDA.jpg" alt="Logo PERUMDA" />
+      <div class="brand">
+        <h1>PERUMDA TIRTA SUGI LAENDE</h1>
+        <div class="sub">KABUPATEN MUNA</div>
+      </div>
+    </div>
+
+    <div class="right-menu">
+      <nav class="main-nav">
+        <a href="/index.html">HOME</a>
+        <a href="/pages/tentang.html">TENTANG</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">LAYANAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/tagihan.html">Cek Tagihan</a>
+            <a class="dropdown-item" href="/pages/lokasi.html">Lokasi PDAM</a>
+            <a class="dropdown-item" href="/pages/meteran.html">Status Meteran</a>
+            <a class="dropdown-item" href="/pages/profil.html#riwayat">Riwayat Transaksi</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">BANTUAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/cs.html">Customer Service</a>
+            <a class="dropdown-item" href="/pages/faq.html">FAQ</a>
+            <a class="dropdown-item" href="/pages/kontak.html">Kontak Kami</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="/pages/register.html" class="signup-button" id="userNavAction">Sign Up</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <header class="page-header">
+      <h1>METODE PEMBAYARAN</h1>
+      <p class="muted-small">Silakan tinjau detail metode di bawah ini, kemudian selesaikan pembayaran.</p>
+
+      <div class="steps" aria-hidden="true">
+        <div class="step">
+          <span class="step-number">①</span>
+          <span class="step-text">Cek Tagihan</span>
+        </div>
+        <div class="step">
+          <span class="step-number step-current">②</span>
+          <span class="step-text step-text-current">Pembayaran</span>
+        </div>
+        <div class="step">
+          <span class="step-number">③</span>
+          <span class="step-text">Selesai</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="main-grid">
+      <!-- Ringkasan Tagihan -->
+      <article class="card-panel summary-card" id="summaryCard">
+        <h5>Ringkasan Tagihan</h5>
+        <p class="muted-small">Pastikan data berikut benar.</p>
+
+        <div class="summary-grid">
+          <div class="label">Nomor Pelanggan</div>
+          <div class="value" id="s_nomor">-</div>
+
+          <div class="label">Nama</div>
+          <div class="value" id="s_nama">-</div>
+
+          <div class="label">Periode</div>
+          <div class="value" id="s_periode">-</div>
+
+          <div class="label">Total Tagihan</div>
+          <div class="value" id="s_total">-</div>
+
+          <div class="label">Status</div>
+          <div class="value">
+            <span id="s_status" class="badge bg-danger">-</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Kartu Metode (dinamis via JS) -->
+      <article class="card-panel method-card" id="methodCard">
+        <div class="method-head">
+          <div class="method-icon">
+            <img id="methodIcon" src="/img/logo_tagihan.png" alt="Ikon Metode" />
+          </div>
+          <div class="method-title">
+            <h5 id="methodName">-</h5>
+            <p class="muted-small" id="methodSubtitle">-</p>
+          </div>
+        </div>
+
+        <div class="method-body" id="methodBody">
+          <!-- konten spesifik metode akan diisi oleh pembayaran_detail.js -->
+        </div>
+
+        <div class="actions">
+          <a href="/pages/pembayaran.html" class="muted-small back-link">
+            <i class="fa-solid fa-arrow-left"></i>
+            ← Kembali
+          </a>
+
+          <button id="btnPayMidtrans" class="btn btn-primary">
+            Bayar Sekarang
+          </button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/pages/cs.html">Pusat Bantuan</a>
+      <a href="/pages/kontak.html">Hubungi Kami</a>
+      <a href="/pages/faq.html">Kebijakan Privasi</a>
+    </div>
+    <div class="copy">
+      © 2025 PDAM Tirta SUGI LAENDE. Semua hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar-auth.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureAuthenticated();
+    });
+  </script>
+
+  <!-- MIDTRANS SNAP (SANDBOX) -->
+  <script
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="Mid-client-FOEdgD_U5E6sVUXc">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/pembayaran_detail.js"></script>
+</body>
+</html>

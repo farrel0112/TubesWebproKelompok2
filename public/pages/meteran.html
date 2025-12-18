@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Status Meteran • PERUMDA TIRTA SUGI LAENDE</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="/css/meteran.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="/img/LOGO PERUMDA.jpg" alt="Logo PERUMDA" />
+      <div class="brand">
+        <h1>PERUMDA TIRTA SUGI LAENDE</h1>
+        <div class="sub">KABUPATEN MUNA</div>
+      </div>
+    </div>
+
+    <div class="right-menu">
+      <nav class="main-nav">
+        <a href="/index.html">HOME</a>
+        <a href="/pages/tentang.html">TENTANG</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">LAYANAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/tagihan.html">Cek Tagihan</a>
+            <a class="dropdown-item" href="/pages/lokasi.html">Lokasi PDAM</a>
+            <a class="dropdown-item" href="/pages/meteran.html">Status Meteran</a>
+            <a class="dropdown-item" href="/pages/profil.html#riwayat">Riwayat Transaksi</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">BANTUAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/cs.html">Customer Service</a>
+            <a class="dropdown-item" href="/pages/faq.html">FAQ</a>
+            <a class="dropdown-item" href="/pages/kontak.html">Kontak Kami</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="/pages/register.html" class="signup-button" id="userNavAction">Sign Up</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-icon">
+        <i class="fa-solid fa-gauge"></i>
+      </div>
+      <h2 class="hero-title">Status Meteran</h2>
+      <p class="hero-sub">Cek pembacaan meter dan kubikasi berdasarkan periode yang Anda pilih.</p>
+    </div>
+  </section>
+
+  <main class="page container">
+    <section class="card-panel search-card">
+      <h5 class="title">Cek Status Meteran</h5>
+      <p class="muted">Masukkan Nomor Pelanggan untuk melihat data meteran.</p>
+
+      <form id="formCari" class="row g-2">
+        <div class="col-12 col-md-6">
+          <div class="form-floating">
+            <input type="text" id="inpNomor" class="form-control" placeholder="Masukkan nomor pelanggan (contoh: D102345)" required />
+            <label for="inpNomor">Nomor Pelanggan</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-auto d-grid">
+          <button class="btn-primary-cta" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Cek</span>
+          </button>
+        </div>
+      </form>
+
+      <div id="notFound" class="alert alert-warning small mt-3" role="alert" style="display:none;">
+        Data pelanggan tidak ditemukan. Periksa nomor pelanggan Anda.
+      </div>
+    </section>
+
+    <section id="hasilWrap" class="card-panel hasil-card" style="display:none;">
+      <div class="period-row">
+        <div class="period-label">Periode</div>
+        <div class="period-inputs">
+          <select id="selBulan" class="form-select"></select>
+          <select id="selTahun" class="form-select"></select>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <article class="card soft">
+          <h6 class="section-subtitle">Identitas Pelanggan</h6>
+          <div class="info-row">
+            <div class="label">Nama</div>
+            <div class="value" id="vNama">-</div>
+          </div>
+          <div class="info-row">
+            <div class="label">Nomor Pelanggan</div>
+            <div class="value" id="vNomor">-</div>
+          </div>
+          <div class="info-row">
+            <div class="label">Alamat Terdaftar</div>
+            <div class="value" id="vAlamat">-</div>
+          </div>
+        </article>
+
+        <article class="card soft">
+          <h6 class="section-subtitle">Data Pembacaan</h6>
+          <div class="meter-box">
+            <div class="meter-label">Angka Meteran</div>
+            <div class="meter-value" id="vMeter">0</div>
+          </div>
+          <div class="kwh-row">
+            <div class="kwh-item">
+              <div class="kwh-label">Total Kubikasi</div>
+              <div class="kwh-value" id="vKubik">0 m³</div>
+            </div>
+            <div class="kwh-item">
+              <div class="kwh-label">Periode Dipilih</div>
+              <div class="kwh-value" id="vPeriode">-</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="note muted">
+        Data ini merupakan simulasi tampilan. Integrasikan ke backend untuk data aktual.
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/pages/cs.html">Pusat Bantuan</a>
+      <a href="/pages/kontak.html">Hubungi Kami</a>
+      <a href="/pages/faq.html">Kebijakan Privasi</a>
+    </div>
+    <div class="copy">
+      © 2025 PDAM Tirta SUGI LAENDE. Semua hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar-auth.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureAuthenticated();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/meteran.js"></script>
+</body>
+</html>

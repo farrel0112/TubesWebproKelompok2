@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pengaduan | PDAM</title>
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <span class="drop"></span>
+        <div>
+          <div class="brand-title">PDAM</div>
+          <div class="brand-sub">Admin Panel</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-item" href="/pages/admin/dashboard.html">📊 Dashboard</a>
+      <a class="nav-item" href="/pages/admin/customers.html">👥 Pelanggan</a>
+      <a class="nav-item" href="/pages/admin/meter-readings.html">📟 Input Meter</a>
+      <a class="nav-item" href="/pages/admin/bills.html">🧾 Tagihan</a>
+      <a class="nav-item active" href="/pages/admin/complaints.html">🛠️ Pengaduan</a>
+      <div class="nav-divider"></div>
+      <button id="btnLogout" class="nav-item nav-btn">🚪 Logout</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <div>
+          <div class="hero-kicker"><span class="kicker-dot"></span> Layanan</div>
+          <h1 class="hero-title">Manajemen Pengaduan</h1>
+          <div class="hero-subtitle">Kelola gangguan & pengaduan pelanggan: verifikasi, proses, dan selesaikan</div>
+        </div>
+      </div>
+      <div class="hero-wave"></div>
+    </header>
+
+    <div id="alert" class="alert hidden"></div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Daftar Pengaduan</h2>
+          <div class="panel-subtitle">Filter berdasarkan status, tipe, dan kata kunci</div>
+        </div>
+        <button type="button" class="btn-secondary" id="btnRefresh">Refresh</button>
+      </div>
+
+      <div class="filters">
+        <div class="field">
+          <label>Status</label>
+          <select id="filterStatus">
+            <option value="">Semua</option>
+            <option value="new">Submitted</option>
+            <option value="in_progress">In Progress</option>
+            <option value="resolved">Resolved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Tipe</label>
+          <select id="filterType">
+            <option value="">Semua</option>
+            <option value="pengaduan">Pengaduan</option>
+            <option value="gangguan">Gangguan</option>
+            <option value="kebocoran">Kebocoran</option>
+            <option value="meter_rusak">Meter Rusak</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Kata Kunci (nama/subject)</label>
+          <input id="filterQ" placeholder="contoh: Muhammad / air tidak jalan" />
+        </div>
+
+        <button type="button" class="btn-secondary" id="btnApply">Terapkan</button>
+        <button type="button" class="btn-secondary" id="btnReset">Reset</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Pelanggan</th>
+            <th>Tipe</th>
+            <th>Subjek</th>
+            <th>Status</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+          </tr>
+          </thead>
+          <tbody id="complaintTable">
+          <tr><td colspan="8" class="muted">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Modal detail -->
+    <div class="modal hidden" id="modalDetail">
+      <div class="modal-card modal-wide">
+        <div class="modal-head">
+          <h3>Detail Pengaduan</h3>
+          <button class="icon-btn" id="btnCloseDetail" type="button">✕</button>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">Pelanggan</div>
+            <div class="detail-value" id="dCustomer">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Tipe</div>
+            <div class="detail-value" id="dType">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Status</div>
+            <div class="detail-value" id="dStatus">-</div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:12px;">
+          <label>Subjek</label>
+          <input id="dSubject" readonly />
+        </div>
+
+        <div class="field">
+          <label>Deskripsi</label>
+          <textarea id="dDesc" rows="5" readonly></textarea>
+        </div>
+
+        <hr style="border:none;border-top:1px solid rgba(15,23,42,.12);margin:14px 0;">
+
+        <form id="updateForm">
+          <input type="hidden" id="editId" />
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Update Status</label>
+              <select id="editStatus" required>
+                <option value="new">Submitted</option>
+                <option value="in_progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Catatan Petugas</label>
+              <input id="editNote" placeholder="contoh: Sudah diteruskan ke tim lapangan" />
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btnDelete">Hapus</button>
+            <div style="flex:1"></div>
+            <button type="button" class="btn-secondary" id="btnCancelDetail">Tutup</button>
+            <button type="submit" class="btn-primary">Simpan Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="muted">Manajemen Pengaduan • PDAM Kabupaten Muna</div>
+    </footer>
+  </main>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/admin-guard.js"></script>
+<script src="/js/admin-complaints.js"></script>
+</body>
+</html>

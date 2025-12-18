@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cek Tagihan - PERUMDA TIRTA SUGI LAENDE</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="/css/tagihan.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="/img/LOGO PERUMDA.jpg" alt="Logo PERUMDA" />
+      <div class="brand">
+        <h1>PERUMDA TIRTA SUGI LAENDE</h1>
+        <div class="sub">KABUPATEN MUNA</div>
+      </div>
+    </div>
+
+    <div class="right-menu">
+      <nav class="main-nav">
+        <a href="/index.html">HOME</a>
+        <a href="/pages/tentang.html">TENTANG</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">LAYANAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/tagihan.html">Cek Tagihan</a>
+            <a class="dropdown-item" href="/pages/lokasi.html">Lokasi PDAM</a>
+            <a class="dropdown-item" href="/pages/meteran.html">Status Meteran</a>
+            <a class="dropdown-item" href="/pages/profil.html#riwayat">Riwayat Transaksi</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">BANTUAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/cs.html">Customer Service</a>
+            <a class="dropdown-item" href="/pages/faq.html">FAQ</a>
+            <a class="dropdown-item" href="/pages/kontak.html">Kontak Kami</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="/pages/register.html" class="signup-button" id="userNavAction">Sign Up</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="hero-icon">
+        <i class="fa-solid fa-droplet"></i>
+      </div>
+      <h1 class="hero-title">Cek Tagihan Air Anda</h1>
+      <p class="hero-sub">Pilih periode untuk melihat tagihan air Anda.</p>
+
+      <form id="cekForm" class="cek-form">
+        <div class="row g-2 periode-row">
+          <div class="col-6">
+            <label for="inpBulan" class="form-label">Bulan</label>
+            <select id="inpBulan" class="form-select" required></select>
+          </div>
+          <div class="col-6">
+            <label for="inpTahun" class="form-label">Tahun</label>
+            <select id="inpTahun" class="form-select" required></select>
+          </div>
+        </div>
+
+        <button class="btn btn-primary-cta submit-btn" type="submit" id="btnCek">
+          Cek Tagihan
+        </button>
+      </form>
+
+      <!-- Hasil ringkas (tetap ada, tapi tidak “list panjang”) -->
+      <div id="hasilTagihan" class="tagihan-result mt-4" style="display:none;">
+        <h3>Hasil Tagihan</h3>
+        <div class="result-box">
+          <div><strong>Nama:</strong> <span id="resNama">-</span></div>
+          <div><strong>Nomor Pelanggan:</strong> <span id="resNomor">-</span></div>
+          <div><strong>Periode:</strong> <span id="resPeriode">-</span></div>
+          <div><strong>Total Tagihan:</strong> <span id="resTotal">-</span></div>
+          <div><strong>Status:</strong> <span id="resStatus">-</span></div>
+
+          <!-- tombol bayar dikontrol JS -->
+          <button type="button" class="btn btn-primary mt-3" id="btnBayar" style="display:none;">
+            Bayar
+          </button>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/pages/cs.html">Pusat Bantuan</a>
+      <a href="/pages/kontak.html">Hubungi Kami</a>
+      <a href="/pages/faq.html">Kebijakan Privasi</a>
+    </div>
+    <div class="copy">
+      © 2025 PDAM Tirta SUGI LAENDE. Semua hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/navbar-auth.js"></script>
+  <script src="/js/auth-guard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureAuthenticated();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/tagihan.js"></script>
+</body>
+</html>

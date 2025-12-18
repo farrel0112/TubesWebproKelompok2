@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customer Service • PERUMDA TIRTA SUGI LAENDE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link href="/css/cs.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">
+      <img src="/img/LOGO PERUMDA.jpg" alt="Logo PERUMDA" />
+      <div class="brand">
+        <h1>PERUMDA TIRTA SUGI LAENDE</h1>
+        <div class="sub">KABUPATEN MUNA</div>
+      </div>
+    </div>
+
+    <div class="right-menu">
+      <nav class="main-nav">
+        <a href="/index.html">HOME</a>
+        <a href="/pages/tentang.html">TENTANG</a>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">LAYANAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/tagihan.html">Cek Tagihan</a>
+            <a class="dropdown-item" href="/pages/lokasi.html">Lokasi PDAM</a>
+            <a class="dropdown-item" href="/pages/status_meter.html">Status Meteran</a>
+            <a class="dropdown-item" href="/pages/profil.html#riwayat">Riwayat Transaksi</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link-caret">BANTUAN</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/pages/cs.html">Customer Service</a>
+            <a class="dropdown-item" href="/pages/faq.html">FAQ</a>
+            <a class="dropdown-item" href="/pages/kontak.html">Kontak Kami</a>
+          </div>
+        </div>
+      </nav>
+
+      <a href="/pages/register.html" class="signup-button" id="userNavAction">Sign Up</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-icon">
+        <i class="fa-solid fa-headset"></i>
+      </div>
+      <h2 class="hero-title">Layanan Pelanggan & Darurat</h2>
+      <p class="hero-sub">
+        Hubungi kami melalui WhatsApp atau telepon. Untuk keadaan darurat, temukan lokasi PDAM terdekat dan arahkan segera.
+      </p>
+    </div>
+  </section>
+
+  <main class="page container">
+    <section class="card-panel emergency-card">
+      <div class="sec-head">
+        <h5 class="title">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Darurat: Temukan PDAM Terdekat
+        </h5>
+        <div class="actions">
+          <button id="btnUseLocation" class="btn-primary-cta">
+            <i class="fa-solid fa-location-crosshairs"></i>
+            Gunakan Lokasi Saya
+          </button>
+          <button id="btnSelectManual" class="btn-ghost">
+            <i class="fa-solid fa-map-location-dot"></i>
+            Pilih Lokasi Manual
+          </button>
+        </div>
+      </div>
+
+      <div class="map-wrap">
+        <div id="map" aria-label="Peta lokasi PDAM terdekat"></div>
+        <aside class="nearest-box" id="nearestBox" style="display:none;">
+          <div class="nb-title">PDAM Terdekat</div>
+          <div class="nb-name" id="nbName">-</div>
+          <div class="nb-dist" id="nbDist">-</div>
+          <a id="nbDirections" href="#" target="_blank" rel="noopener" class="btn-dir">
+            <i class="fa-solid fa-route"></i>
+            Arahkan via Google Maps
+          </a>
+        </aside>
+      </div>
+
+      <div class="hint muted">
+        *Izinkan akses lokasi agar kami dapat menghitung jarak terdekat. Atau pilih lokasi manual lalu klik pada peta.
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <article class="card-panel contact-card">
+        <h6 class="section-subtitle">
+          <i class="fa-solid fa-comments"></i>
+          Customer Service
+        </h6>
+        <p class="muted">
+          Tersedia pada hari kerja pukul 08.00–16.00 WITA. Chat atau telepon untuk pertanyaan umum dan tagihan.
+        </p>
+
+        <div class="contact-row">
+          <div class="contact-left">
+            <div class="label">WhatsApp</div>
+            <div class="value">0812-3456-7890</div>
+          </div>
+          <div class="contact-actions">
+            <a class="btn-wa" href="https://wa.me/6281234567890?text=Halo%20PDAM%2C%20saya%20butuh%20bantuan%20terkait%20layanan." target="_blank" rel="noopener">
+              <i class="fa-brands fa-whatsapp"></i>
+              Chat
+            </a>
+            <a class="btn-call" href="tel:+6281234567890">
+              <i class="fa-solid fa-phone"></i>
+              Telepon
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card-panel contact-card">
+        <h6 class="section-subtitle">
+          <i class="fa-solid fa-helmet-safety"></i>
+          Petugas Lapangan
+        </h6>
+        <p class="muted">
+          Untuk kebocoran pipa, kualitas air, dan penanganan di lapangan. Tersedia 24/7 untuk keadaan darurat.
+        </p>
+
+        <div class="contact-row">
+          <div class="contact-left">
+            <div class="label">WhatsApp</div>
+            <div class="value">0813-2222-4444</div>
+          </div>
+          <div class="contact-actions">
+            <a class="btn-wa" href="https://wa.me/6281322224444?text=Darurat%20PDAM%3A%20Mohon%20bantuan%20petugas%20lapangan." target="_blank" rel="noopener">
+              <i class="fa-brands fa-whatsapp"></i>
+              Chat
+            </a>
+            <a class="btn-call" href="tel:+6281322224444">
+              <i class="fa-solid fa-phone"></i>
+              Telepon
+            </a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="/pages/cs.html">Pusat Bantuan</a>
+      <a href="/pages/faq.html">FAQ</a>
+      <a href="/pages/kontak.html">Kontak Kami</a>
+    </div>
+    <div class="copy">
+      © 2025 PERUMDA TIRTA SUGI LAENDE. Semua hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <script src="/js/navbar-auth.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/cs.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Admin | PDAM</title>
+
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">
+          <span class="drop" aria-hidden="true"></span>
+          <div class="brand-text">
+            <div class="brand-title">PDAM</div>
+            <div class="brand-sub">Admin Panel</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item active" href="/pages/admin/dashboard.html">
+          <span class="nav-ico" aria-hidden="true">📊</span>
+          Dashboard
+        </a>
+        <a class="nav-item" href="/pages/admin/customers.html">
+          <span class="nav-ico" aria-hidden="true">👥</span>
+          Pelanggan
+        </a>
+        <a class="nav-item" href="/pages/admin/meter-readings.html">
+          <span class="nav-ico" aria-hidden="true">🧾</span>
+          Input Meter
+        </a>
+        <a class="nav-item" href="/pages/admin/bills.html">
+          <span class="nav-ico" aria-hidden="true">💳</span>
+          Tagihan
+        </a>
+        <a class="nav-item" href="/pages/admin/complaints.html">
+          <span class="nav-ico" aria-hidden="true">🛠️</span>
+          Pengaduan
+        </a>
+
+        <div class="nav-divider"></div>
+
+        <button id="btnLogout" class="nav-item nav-btn">
+          <span class="nav-ico" aria-hidden="true">🚪</span>
+          Logout
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mini-badge">
+          <span class="mini-dot" aria-hidden="true"></span>
+          Online
+        </div>
+        <div class="muted">© PDAM • Admin</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+
+        <div class="hero-content">
+          <div class="hero-left">
+            <div class="hero-kicker">
+              <span class="kicker-dot" aria-hidden="true"></span>
+              Monitoring Operasional
+            </div>
+            <h1 class="hero-title">Dashboard</h1>
+            <div class="hero-subtitle">
+              Monitoring ringkas operasional PDAM untuk periode <span id="periodLabel">-</span>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="user-chip">
+              <div class="user-avatar" aria-hidden="true"></div>
+              <div class="user-meta">
+                <div class="user-name" id="adminName">Admin</div>
+                <div class="user-role">Pegawai</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-wave" aria-hidden="true"></div>
+      </header>
+
+      <div id="alert" class="alert hidden"></div>
+
+      <section class="grid">
+        <div class="stat stat-a">
+          <div class="stat-top">
+            <div class="stat-ico" aria-hidden="true">👥</div>
+            <div class="stat-title">Total Pelanggan</div>
+          </div>
+          <div class="stat-value" id="totalCustomers">-</div>
+          <div class="stat-meta">Jumlah seluruh data pelanggan</div>
+        </div>
+
+        <div class="stat stat-b">
+          <div class="stat-top">
+            <div class="stat-ico" aria-hidden="true">✅</div>
+            <div class="stat-title">Pelanggan Aktif</div>
+          </div>
+          <div class="stat-value" id="activeCustomers">-</div>
+          <div class="stat-meta">Status aktif di sistem</div>
+        </div>
+
+        <div class="stat stat-c">
+          <div class="stat-top">
+            <div class="stat-ico" aria-hidden="true">📟</div>
+            <div class="stat-title">Pembacaan Meter Bulan Ini</div>
+          </div>
+          <div class="stat-value" id="readingsThisMonth">-</div>
+          <div class="stat-meta">Total input meter periode berjalan</div>
+        </div>
+
+        <div class="stat stat-d">
+          <div class="stat-top">
+            <div class="stat-ico" aria-hidden="true">🧾</div>
+            <div class="stat-title">Tagihan Bulan Ini</div>
+          </div>
+          <div class="stat-value" id="billsThisMonth">-</div>
+          <div class="stat-meta">Total tagihan dibuat periode berjalan</div>
+        </div>
+
+        <div class="stat stat-e">
+          <div class="stat-top">
+            <div class="stat-ico" aria-hidden="true">⏳</div>
+            <div class="stat-title">Tagihan Belum Bayar</div>
+          </div>
+          <div class="stat-value" id="unpaidBills">-</div>
+          <div class="stat-meta">Perlu ditindaklanjuti</div>
+        </div>
+
+        <div class="stat stat-f">
+          <div class="stat-top">
+            <div class="stat-ico" aria-hidden="true">🛠️</div>
+            <div class="stat-title">Pengaduan Aktif</div>
+          </div>
+          <div class="stat-value" id="openComplaints">-</div>
+          <div class="stat-meta">Status submitted / in progress</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Aksi Cepat</h2>
+            <div class="panel-subtitle">Langsung menuju fitur inti admin</div>
+          </div>
+          <div class="panel-hint">Tip: kerjakan input meter dulu, lalu generate tagihan.</div>
+        </div>
+
+        <div class="actions">
+          <a class="action" href="/pages/admin/customers.html">
+            <div class="action-ico" aria-hidden="true">👥</div>
+            <div class="action-title">Kelola Pelanggan</div>
+            <div class="action-desc">Tambah, edit, cari pelanggan</div>
+          </a>
+
+          <a class="action" href="/pages/admin/meter-readings.html">
+            <div class="action-ico" aria-hidden="true">📟</div>
+            <div class="action-title">Input Meter</div>
+            <div class="action-desc">Catat pembacaan meter bulanan</div>
+          </a>
+
+          <a class="action" href="/pages/admin/bills.html">
+            <div class="action-ico" aria-hidden="true">🧾</div>
+            <div class="action-title">Manajemen Tagihan</div>
+            <div class="action-desc">Generate & update status tagihan</div>
+          </a>
+
+          <a class="action" href="/pages/admin/complaints.html">
+            <div class="action-ico" aria-hidden="true">🛠️</div>
+            <div class="action-title">Kelola Pengaduan</div>
+            <div class="action-desc">Proses pengaduan pelanggan</div>
+          </a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="muted">Dashboard Admin • PDAM Kabupaten Muna (Tubes WebPro)</div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin-guard.js"></script>
+  <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

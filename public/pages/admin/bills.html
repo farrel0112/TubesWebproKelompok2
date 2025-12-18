@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Manajemen Tagihan | PDAM</title>
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <span class="drop"></span>
+        <div>
+          <div class="brand-title">PDAM</div>
+          <div class="brand-sub">Admin Panel</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-item" href="/pages/admin/dashboard.html">📊 Dashboard</a>
+      <a class="nav-item" href="/pages/admin/customers.html">👥 Pelanggan</a>
+      <a class="nav-item" href="/pages/admin/meter-readings.html">📟 Input Meter</a>
+      <a class="nav-item active" href="/pages/admin/bills.html">🧾 Tagihan</a>
+      <a class="nav-item" href="/pages/admin/complaints.html">🛠️ Pengaduan</a>
+      <div class="nav-divider"></div>
+      <button id="btnLogout" class="nav-item nav-btn" type="button">🚪 Logout</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <div>
+          <div class="hero-kicker"><span class="kicker-dot"></span> Keuangan</div>
+          <h1 class="hero-title">Manajemen Tagihan</h1>
+          <div class="hero-subtitle">Generate, monitor, dan update status tagihan per periode</div>
+        </div>
+      </div>
+      <div class="hero-wave"></div>
+    </header>
+
+    <div id="alert" class="alert hidden"></div>
+
+    <!-- Panel: Generate -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Generate Tagihan</h2>
+          <div class="panel-subtitle">Buat tagihan berdasarkan pembacaan meter pada periode tertentu</div>
+        </div>
+        <button class="btn-primary" id="btnOpenGenerate" type="button">+ Generate</button>
+      </div>
+
+      <div class="muted">
+        Tips: Pastikan pembacaan meter untuk periode tersebut sudah lengkap sebelum generate.
+      </div>
+    </section>
+
+    <!-- Panel: List -->
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Daftar Tagihan</h2>
+          <div class="panel-subtitle">Filter per periode, status, dan pelanggan</div>
+        </div>
+        <button class="btn-secondary" id="btnRefresh" type="button">Refresh</button>
+      </div>
+
+      <div class="filters">
+        <div class="field">
+          <label>Periode (YYYYMM)</label>
+          <input id="filterPeriod" placeholder="contoh: 202512" />
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+          <select id="filterStatus">
+            <option value="">Semua</option>
+            <option value="unpaid">Belum Bayar</option>
+            <option value="paid">Sudah Bayar</option>
+            <option value="pending">Pending</option>
+            <option value="canceled">Dibatalkan</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Cari Nama Pelanggan</label>
+          <input id="filterName" placeholder="contoh: Muhammad" />
+        </div>
+
+        <button class="btn-secondary" id="btnApply" type="button">Terapkan</button>
+        <button class="btn-secondary" id="btnReset" type="button">Reset</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Pelanggan</th>
+            <th>Periode</th>
+            <th>Kubikasi</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Jatuh Tempo</th>
+            <th>Aksi</th>
+          </tr>
+          </thead>
+          <tbody id="billTable">
+            <tr><td colspan="8" class="muted">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="muted" style="margin-top:10px">
+        Aksi: 🧾 Invoice, ✏️ Edit, 🗑️ Hapus, ✅ Tandai Lunas (offline kantor)
+      </div>
+    </section>
+
+    <!-- Modal: Generate -->
+    <div class="modal hidden" id="modalGenerate">
+      <div class="modal-card modal-wide">
+        <div class="modal-head">
+          <h3>Generate Tagihan</h3>
+          <button class="icon-btn" id="btnCloseGenerate" type="button">✕</button>
+        </div>
+
+        <form id="generateForm">
+          <div class="form-grid">
+            <div class="field">
+              <label>Pilih Pembacaan Meter (reading)</label>
+              <select id="genReadingId" required></select>
+              <div class="hint">Pilih data pembacaan yang akan dibuatkan tagihan</div>
+            </div>
+
+            <div class="field">
+              <label>Periode (YYYYMM)</label>
+              <input id="genPeriod" placeholder="contoh: 202512" required />
+              <div class="hint">Format 6 digit</div>
+            </div>
+
+            <!-- (Fix) field opsional note sesuai JS -->
+            <div class="field" style="grid-column: 1 / -1;">
+              <label>Catatan (opsional)</label>
+              <textarea id="genNote" rows="2" placeholder="contoh: generate ulang karena perbaikan pembacaan"></textarea>
+              <div class="hint">Tidak wajib. Jika backend belum pakai, aman diabaikan.</div>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btnCancelGenerate">Batal</button>
+            <button type="submit" class="btn-primary">Proses Generate</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Edit bill -->
+    <div class="modal hidden" id="modalEdit">
+      <div class="modal-card modal-wide">
+        <div class="modal-head">
+          <h3 id="editTitle">Update Tagihan</h3>
+          <button class="icon-btn" id="btnCloseEdit" type="button">✕</button>
+        </div>
+
+        <form id="editForm">
+          <input type="hidden" id="editId" />
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Status</label>
+              <select id="editStatus" required>
+                <option value="unpaid">Belum Bayar</option>
+                <option value="paid">Sudah Bayar</option>
+                <option value="pending">Pending</option>
+                <option value="canceled">Dibatalkan</option>
+              </select>
+              <div class="hint">Edit status bill (tidak otomatis buat payment offline)</div>
+            </div>
+
+            <div class="field">
+              <label>Jatuh Tempo (opsional)</label>
+              <input type="date" id="editDueDate" />
+              <div class="hint">Jika backend punya due_date</div>
+            </div>
+
+            <div class="field">
+              <label>Total (opsional)</label>
+              <input type="number" id="editTotal" min="0" />
+              <div class="hint">Jika backend mengizinkan update total</div>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btnCancelEdit">Batal</button>
+            <button type="submit" class="btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: Konfirmasi Pembayaran Offline (pegawai) -->
+    <div class="modal hidden" id="modalOfflinePay">
+      <div class="modal-card modal-wide">
+        <div class="modal-head">
+          <h3>Konfirmasi Pembayaran Offline</h3>
+          <button class="icon-btn" id="btnCloseOfflinePay" type="button">✕</button>
+        </div>
+
+        <form id="offlinePayForm">
+          <input type="hidden" id="offlineBillId" />
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Tanggal Pembayaran</label>
+              <input type="datetime-local" id="offlinePaidAt" required />
+              <div class="hint">Default: sekarang</div>
+            </div>
+
+            <div class="field">
+              <label>No. Kwitansi (opsional)</label>
+              <input id="offlineReceiptNo" placeholder="contoh: KWT-2025-0012" />
+            </div>
+
+            <div class="field" style="grid-column: 1 / -1;">
+              <label>Catatan (opsional)</label>
+              <textarea id="offlineNote" rows="2" placeholder="contoh: bayar tunai di loket A"></textarea>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btnCancelOfflinePay">Batal</button>
+            <button type="submit" class="btn-primary">Tandai Lunas</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="muted">Manajemen Tagihan • PDAM Kabupaten Muna</div>
+    </footer>
+  </main>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/admin-guard.js"></script>
+<script src="/js/admin-bills.js"></script>
+</body>
+</html>
