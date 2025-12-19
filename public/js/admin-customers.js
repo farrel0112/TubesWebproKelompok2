@@ -62,6 +62,18 @@ btnAdd.onclick = () => {
   modal.classList.remove("hidden");
 };
 
+const btnLogout = document.getElementById("btnLogout");
+  if (btnLogout) {
+    btnLogout.addEventListener("click", async () => {
+      try {
+        await apiRequest("/logout", { method: "POST" });
+      } catch {}
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/pages/register.html";
+    });
+  }
+
 /* Cancel */
 btnCancel.onclick = () => modal.classList.add("hidden");
 

@@ -22,7 +22,8 @@
 
   const now = new Date();
   const tahunNow = now.getFullYear();
-  for (let y = tahunNow; y >= tahunNow - 5; y--) {
+
+  for (let y = tahunNow - 5; y <= tahunNow + 5; y++) {
     const opt = document.createElement("option");
     opt.value = y;
     opt.textContent = y;
@@ -42,17 +43,9 @@ function formatRupiah(num) {
   return "Rp " + n.toLocaleString("id-ID");
 }
 
-// fallback param: period atau periode (biar aman sesuai backend kamu)
 async function fetchBillsByPeriod(periodeYYYYMM) {
-  // 1) coba param period
-  try {
-    const res1 = await apiRequest(`/tagihan?period=${encodeURIComponent(periodeYYYYMM)}`, { method: "GET" });
-    return res1.data || res1;
-  } catch (e1) {
-    // 2) coba param periode (punya code kamu)
-    const res2 = await apiRequest(`/tagihan?periode=${encodeURIComponent(periodeYYYYMM)}`, { method: "GET" });
-    return res2.data || res2;
-  }
+  const res = await apiRequest(`/tagihan?periode=${encodeURIComponent(periodeYYYYMM)}`, { method: "GET" });
+  return res.data || res;
 }
 
 function pickOneBill(arr) {

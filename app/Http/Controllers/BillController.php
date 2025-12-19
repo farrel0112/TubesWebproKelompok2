@@ -190,11 +190,10 @@ class BillController extends Controller
     public function filterByPeriode(Request $request)
     {
         $request->validate([
-            'periode' => 'required|string',
+            'periode' => ['required', 'regex:/^\d{6}$/'], // wajib format YYYYMM
         ]);
 
         $user = $request->user();
-
         $customer = $user->customer;
 
         if (!$customer) {
@@ -202,9 +201,16 @@ class BillController extends Controller
         }
 
         $bills = Bill::where('customer_id', $customer->id)
-                    ->where('period', $request->periode)
-                    ->with(['customer.user'])
-                    ->get();
+            ->where('period', $request->periode)
+            ->with(['customer.user'])
+            ->get();
+
+        if ($bills->isEmpty()) {
+            return response()->json([
+                'message' => 'Tagihan untuk periode ini tidak ditemukan',
+                'data' => []
+            ], 404);
+        }
 
         return response()->json([
             'message' => 'Tagihan ditemukan',
