@@ -121,19 +121,17 @@ class BillController extends Controller
 
     public function invoice($id)
     {
-        $bill = Bill::with(['customer.user', 'payments'])->findOrFail($id);
+        $bill = Bill::with(['customer.user', 'latestSettledPayment', 'payments'])->findOrFail($id);
 
-        $paidPayment = $bill->payments
-            ->whereNotNull('paid_at')
-            ->sortByDesc('paid_at')
-            ->first();
+        // ✅ yang dipakai untuk tanggal pembayaran (offline/online)
+        $paidPayment = $bill->latestSettledPayment;
 
         $data = [
             'title'       => 'Invoice Tagihan PDAM',
             'bill'        => $bill,
             'customer'    => $bill->customer,
             'payments'    => $bill->payments,
-            'paidPayment' => $paidPayment,
+            'paidPayment' => $paidPayment, // ✅ invoice.blade pakai ini
         ];
 
         $pdf = Pdf::loadView('invoice', $data)->setPaper('A4');
@@ -227,27 +225,29 @@ class BillController extends Controller
             return response()->json([
                 'message' => 'Customer tidak ditemukan untuk user ini.',
                 'data' => [
-                    'summary' => ['period' => Carbon::now()->format('Ym'), 'total_tagihan' => 0, 'paid_count' => 0, 'unpaid_count' => 0],
+                    'summary' => [
+                        'period' => Carbon::now()->format('Ym'),
+                        'total_tagihan' => 0,
+                        'paid_count' => 0,
+                        'unpaid_count' => 0
+                    ],
                     'items' => [],
                 ]
             ], 200);
         }
 
-        $currentPeriod = Carbon::now()->format('YYYYmm'); // samakan dengan format period bills kamu
+        // ✅ FIX format period
+        $currentPeriod = Carbon::now()->format('Ym');
 
-        $bills = Bill::with(['payments' => function($q){
-                $q->orderByDesc('paid_at')->orderByDesc('id');
-            }])
-            ->where('customer_id', $customer->id)
+        // ✅ Ambil settled payment terbaru (offline/online) langsung dari relasi
+        $bills = Bill::where('customer_id', $customer->id)
+            ->with(['latestSettledPayment']) // ✅ ini kuncinya
             ->orderByDesc('period')
             ->orderByDesc('id')
             ->get();
 
-        // helper total (kalau tidak ada kolom total)
-        $getTotal = function($bill){
-            // kalau kamu punya kolom total, pakai itu
+        $getTotal = function ($bill) {
             if (isset($bill->total)) return (int) $bill->total;
-            // fallback dari charge + admin_fee
             return (int) (($bill->charge ?? 0) + ($bill->admin_fee ?? 0));
         };
 
@@ -256,12 +256,10 @@ class BillController extends Controller
             ->sum(fn($b) => $getTotal($b));
 
         $paidCount   = $bills->where('status', 'paid')->count();
-        $unpaidCount = $bills->whereIn('status', ['unpaid','pending'])->count();
+        $unpaidCount = $bills->whereIn('status', ['unpaid', 'pending'])->count();
 
-        $items = $bills->map(function($bill) use ($getTotal){
-            $paidPayment = $bill->payments
-                ->first(fn($p) => in_array($p->status, ['settled','capture','paid'])) // fleksibel
-                ?? $bill->payments->first(); // fallback
+        $items = $bills->map(function ($bill) use ($getTotal) {
+            $pay = $bill->latestSettledPayment; // ✅ offline/online sama-sama kebaca
 
             return [
                 'bill_id'    => $bill->id,
@@ -269,7 +267,7 @@ class BillController extends Controller
                 'period'     => $bill->period,
                 'status'     => $bill->status,
                 'total'      => $getTotal($bill),
-                'paid_at'    => $paidPayment?->paid_at, // bisa null
+                'paid_at'    => $pay?->paid_at, // ✅ ini yang JS kamu tampilkan
             ];
         });
 

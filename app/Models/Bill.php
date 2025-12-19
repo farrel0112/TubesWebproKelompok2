@@ -31,4 +31,11 @@ class Bill extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function latestSettledPayment()
+    {
+        return $this->hasOne(Payment::class)
+            ->where('status', 'settled')
+            ->latest('paid_at');
+    }
 }

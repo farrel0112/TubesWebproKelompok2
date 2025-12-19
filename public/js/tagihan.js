@@ -56,9 +56,6 @@ function pickOneBill(arr) {
 }
 
 
-// =======================
-// CEK TAGIHAN REAL MENGGUNAKAN API
-// =======================
 document.getElementById("cekForm")?.addEventListener("submit", async function (e) {
   e.preventDefault();
 
@@ -98,9 +95,6 @@ document.getElementById("cekForm")?.addEventListener("submit", async function (e
 });
 
 
-// =======================
-// TAMPILKAN HASIL KE HTML (ringkas)
-// =======================
 function tampilkanHasil(bill, bills) {
   document.getElementById("resNama").textContent = bill?.customer?.user?.name || "Tidak tersedia";
   document.getElementById("resNomor").textContent = bill?.customer?.customer_no || "-";

@@ -80,24 +80,20 @@
 </table>
 
 <h4>Status Pembayaran</h4>
-@php
-    $paidPayment = $payments
-        ->whereNotNull('paid_at')
-        ->sortByDesc('paid_at')
-        ->first();
 
-    $paidAt = optional($paidPayment)->paid_at;
+@php
+  $paidAt = $paidPayment?->paid_at;
 @endphp
 
 <p>
-    Status: <strong>{{ strtoupper($bill->status) }}</strong><br>
+  Status: <strong>{{ strtoupper($bill->status) }}</strong><br>
 
-    @if ($paidAt)
-        Tanggal Pembayaran:
-        <strong>{{ \Carbon\Carbon::parse($paidAt)->format('d M Y H:i') }}</strong>
-    @else
-        Tanggal Pembayaran: <strong>-</strong>
-    @endif
+  @if ($paidAt)
+    Tanggal Pembayaran:
+    <strong>{{ \Carbon\Carbon::parse($paidAt)->format('d M Y H:i') }}</strong>
+  @else
+    Tanggal Pembayaran: <strong>-</strong>
+  @endif
 </p>
 
 <div class="signature">
