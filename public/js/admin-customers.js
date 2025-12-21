@@ -35,7 +35,7 @@ async function loadCustomers(){
 
     table.innerHTML = data.map(c => `
       <tr>
-        <td>${c.id}</td>
+        <td>${c.customer_no ?? "-"}</td>
         <td>${c.user?.name ?? "-"}</td>
         <td>${formatAddress(c)}</td>
         <td>
